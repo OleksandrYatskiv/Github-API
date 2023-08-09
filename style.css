@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+*{
+    font-family: 'Permanent Marker', cursive;
+}
+
+h1 {
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 200px;
+    margin-right: 50px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px #007bff;
+}
+
+#search-btn {
+    width: 200px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#search-btn:hover {
+    background-color: #1795fc;
+    box-shadow: 0 0 5px #007bff;
+}
+
+.or{
+    margin: 0 30px;
+    font-size: 25px;
+}
+
+#random-btn{
+    width: 200px;
+    background-color: #da0101;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#random-btn:hover {
+    background-color: #ff1313;
+    box-shadow: 0 0 5px #007bff;
+}
+
+.search-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-container{
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 25px 35px rgba(43,43,43,.1), 0 20px 15px rgba(43,43,43,.03);
+}
+
+.avatar-container > img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-right: 30px;
+}
+
+.avatar-container{
+    display: flex;
+    align-items: center;
+}
+
+.error-mssg{
+    color: red;
+}
+
+.error-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
