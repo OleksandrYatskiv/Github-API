@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
-*{
+* {
     font-family: 'Permanent Marker', cursive;
 }
 
@@ -39,12 +39,12 @@ input[type="text"]:focus {
     box-shadow: 0 0 5px #007bff;
 }
 
-.or{
+.or {
     margin: 0 30px;
     font-size: 25px;
 }
 
-#random-btn{
+#random-btn {
     width: 200px;
     background-color: #da0101;
     color: #fff;
@@ -60,39 +60,91 @@ input[type="text"]:focus {
     box-shadow: 0 0 5px #007bff;
 }
 
-.search-container{
+.search-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.card-container{
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.card-container {
     border: 1px solid #ccc;
     border-radius: 10px;
     width: 400px;
-    margin: 50px auto;
+    margin: 70px auto;
     padding: 20px;
-    box-shadow: 0 25px 35px rgba(43,43,43,.1), 0 20px 15px rgba(43,43,43,.03);
+    box-shadow: 0 25px 35px rgba(43, 43, 43, .1), 0 20px 15px rgba(43, 43, 43, .03);
+    animation: fadeIn 0.5s ease-in-out forwards;
+    opacity: 0;
 }
 
-.avatar-container > img{
+.avatar-container>img {
     width: 50px;
     height: 50px;
     border-radius: 100%;
     margin-right: 30px;
 }
 
-.avatar-container{
+.avatar-container {
     display: flex;
     align-items: center;
 }
 
-.error-mssg{
+.error-mssg {
     color: red;
 }
 
-.error-container{
+.error-container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
+
+.repo-headline{
+    text-align: center;
+}
+
+.repo-name{
+    position: relative;
+    padding-left: 20px;
+}
+
+.repo-name::before {
+    content: ""; 
+    position: absolute; 
+    top: 50%; 
+    left: 0; 
+    transform: translateY(-50%); 
+    width: 10px; 
+    height: 10px; 
+    background-color: black; 
+    border-radius: 50%; 
+}
+
+@media (max-width: 768px){
+    .search-container {
+        flex-direction: column;
+    }
+
+    input[type="text"] {
+        margin: 0 0 40px 0;
+    }
+
+    .or{
+        margin: 20px 0;
+    }
+
+    .card-container{
+        width: 300px;
+    }
 }

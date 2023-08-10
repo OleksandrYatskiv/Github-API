@@ -28,16 +28,22 @@ const cardContainer = document.createElement('div');
 const errContainer = document.createElement('div');
 
 searchBtn.addEventListener('click', async () => {
-    const data = await controller(`https://api.github.com/users/${userInput.value}`, 'GET');
-    console.log(data);
+    let data = null;
+    if (!isValidGitHubUsername(userInput.value)) {
+        showErrMssg('Invalid username');
+        return;
+    } else {
+        data = await controller(`https://api.github.com/users/${userInput.value}`, 'GET');
+    }
+
     if (data.message === 'Not Found') {
-        showErrMssg();
+        showErrMssg('Oops! There is no account with this username yet.');
     } else {
         createUserCard(data);
     }
 });
 
-function createUserCard(user) {
+async function createUserCard(user) {
     cardContainer.innerHTML = '';
     errContainer.remove();
 
@@ -47,6 +53,30 @@ function createUserCard(user) {
     const followers = document.createElement('p');
     const location = document.createElement('p');
     const avatarContainer = document.createElement('div');
+    const repoCard = document.createElement('div');
+    const headline = document.createElement('h3');
+
+    headline.innerText = 'Repositories :';
+    headline.classList.add('repo-headline');
+
+    repoCard.append(headline);
+
+    const repos = await getUserRepos(user.login);
+    repos.forEach(repo => {
+        if (repo) {
+            const name = document.createElement('h4');
+            const description = document.createElement('p');
+
+            repoCard.classList.add('repo-card');
+            name.classList.add('repo-name');
+            description.classList.add('repo-description');
+
+            name.innerText = repo.name ? repo.name : '';
+            description.innerText = repo.description ? repo.description : '';
+
+            repoCard.append(name, description);
+        }
+    });
 
     cardContainer.classList.add('card-container');
     avatarContainer.classList.add('avatar-container');
@@ -58,17 +88,17 @@ function createUserCard(user) {
     location.innerText = user.location ? `Location : ${user.location}` : '';
 
     avatarContainer.append(avatar, username)
-    cardContainer.append(avatarContainer, bio, followers, location);
+    cardContainer.append(avatarContainer, bio, followers, location, repoCard);
     wrapp.append(cardContainer);
 }
 
-function showErrMssg() {
+function showErrMssg(err) {
     errContainer.innerHTML = '';
     cardContainer.remove();
 
     const errMssg = document.createElement('p');
 
-    errMssg.innerText = 'User was not found. Please check the entered username'
+    errMssg.innerText = err;
 
     errContainer.classList.add('error-container');
     errMssg.classList.add('error-mssg');
@@ -81,12 +111,24 @@ randomhBtn.addEventListener('click', async () => {
     const randomUserId = Math.floor(Math.random() * 1000000);
     const data = await controller(`https://api.github.com/user/${randomUserId}`, 'GET');
 
-    console.log(data);
-    console.log(randomUserId);
-
     if (data.message === 'Not Found') {
-        showErrMssg();
+        showErrMssg(`User with id : ${randomUserId} was not found, please try again.`);
     } else {
         createUserCard(data);
     }
 });
+
+function isValidGitHubUsername(username) {
+    const pattern = /^[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,38}[a-zA-Z\d]$/;
+
+    return pattern.test(username);
+}
+
+async function getUserRepos(user) {
+    const data = await controller(`https://api.github.com/users/${user}/repos`, 'GET');
+    let repos = [];
+    for (let i = 0; i < 4; i++) {
+        repos.push(data[i]);
+    }
+    return repos;
+}
